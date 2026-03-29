@@ -1,5 +1,4 @@
-﻿using BusinessApi.Interfaces;
-using BusinessApi.Models;
+﻿using BusinessApi.Models;
 
 namespace BusinessApi.Factories
 {

@@ -1,5 +1,4 @@
-using BusinessApi.Interfaces;
-using BusinessApi.Models;
+using BusinessApi.Factories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BusinessApi.Controllers;

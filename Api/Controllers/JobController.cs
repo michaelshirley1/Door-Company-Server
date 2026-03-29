@@ -1,4 +1,4 @@
-using BusinessApi.Interfaces;
+using BusinessApi.Factories;
 using BusinessApi.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,7 +15,6 @@ public class JobController : ControllerBase
         _jobFactory = jobFactory;
     }
 
-    /// <summary>Get all jobs</summary>
     [HttpGet]
     [ProducesResponseType(typeof(IEnumerable<Job>), StatusCodes.Status200OK)]
     public IActionResult GetAll()
@@ -24,7 +23,6 @@ public class JobController : ControllerBase
         return Ok(jobs);
     }
 
-    /// <summary>Get a job by ID</summary>
     [HttpGet("{id:int}")]
     [ProducesResponseType(typeof(Job), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
