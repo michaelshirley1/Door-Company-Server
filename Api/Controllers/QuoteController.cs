@@ -1,4 +1,4 @@
-using BusinessApi.Interfaces;
+using BusinessApi.Factories;
 using BusinessApi.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,7 +15,6 @@ public class QuoteController : ControllerBase
         _quoteFactory = quoteFactory;
     }
 
-    /// <summary>Get all quotes</summary>
     [HttpGet]
     [ProducesResponseType(typeof(IEnumerable<Quote>), StatusCodes.Status200OK)]
     public IActionResult GetAll()
@@ -24,7 +23,6 @@ public class QuoteController : ControllerBase
         return Ok(quotes);
     }
 
-    /// <summary>Get a quote by ID</summary>
     [HttpGet("{id:int}")]
     [ProducesResponseType(typeof(Quote), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

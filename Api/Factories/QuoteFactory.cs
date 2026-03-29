@@ -1,5 +1,4 @@
-﻿using BusinessApi.Interfaces;
-using BusinessApi.Models;
+﻿using BusinessApi.Models;
 
 namespace BusinessApi.Factories
 {
@@ -13,9 +12,9 @@ namespace BusinessApi.Factories
     {
         private static readonly List<Quote> _quotes =
         [
-            new Quote { Id = 1, QuoteNumber = "QTE-001", CustomerName = "Delta Co",   EstimatedAmount = 6000.00m, Status = "Sent",     ExpiresAt = DateTime.UtcNow.AddDays(30) },
-            new Quote { Id = 2, QuoteNumber = "QTE-002", CustomerName = "Epsilon LLC", EstimatedAmount = 850.00m,  Status = "Draft",    ExpiresAt = DateTime.UtcNow.AddDays(14) },
-            new Quote { Id = 3, QuoteNumber = "QTE-003", CustomerName = "Zeta Group",  EstimatedAmount = 22000.00m,Status = "Accepted", ExpiresAt = DateTime.UtcNow.AddDays(7)  },
+            new Quote { Id = 1, QuoteNumber = "QTE-001", },
+            new Quote { Id = 2, QuoteNumber = "QTE-002", },
+            new Quote { Id = 3, QuoteNumber = "QTE-003", },
         ];
 
         public Quote? GetById(int id) =>

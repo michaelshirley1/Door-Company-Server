@@ -1,4 +1,4 @@
-using BusinessApi.Interfaces;
+using BusinessApi.Factories;
 using BusinessApi.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,7 +15,6 @@ public class InvoiceController : ControllerBase
         _invoiceFactory = invoiceFactory;
     }
 
-    /// <summary>Get all invoices</summary>
     [HttpGet]
     [ProducesResponseType(typeof(IEnumerable<Invoice>), StatusCodes.Status200OK)]
     public IActionResult GetAll()
@@ -24,7 +23,6 @@ public class InvoiceController : ControllerBase
         return Ok(invoices);
     }
 
-    /// <summary>Get an invoice by ID</summary>
     [HttpGet("{id:int}")]
     [ProducesResponseType(typeof(Invoice), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

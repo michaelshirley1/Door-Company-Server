@@ -1,5 +1,4 @@
-﻿using BusinessApi.Interfaces;
-using BusinessApi.Models;
+﻿using BusinessApi.Models;
 
 namespace BusinessApi.Factories
 {
@@ -13,9 +12,9 @@ namespace BusinessApi.Factories
     {
         private static readonly List<Job> _jobs =
         [
-            new Job { Id = 1, Title = "Install HVAC System",    Description = "Full installation at site A", Status = "In Progress" },
-            new Job { Id = 2, Title = "Electrical Rewire",      Description = "Rewire warehouse B",          Status = "Pending"     },
-            new Job { Id = 3, Title = "Plumbing Repair",        Description = "Fix leaks in building C",     Status = "Completed"   },
+            new Job { Id = 1 },
+            new Job { Id = 2 },
+            new Job { Id = 3 },
         ];
 
         public Job? GetById(int id) =>
