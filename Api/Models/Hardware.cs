@@ -8,6 +8,7 @@
         public string? Material { get; set; }
         public string? Description { get; set; }
         public bool IsActive { get; set; } = true;
+        public float Price { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     }
 
@@ -19,6 +20,7 @@
         public string? SizeMm { get; set; }
         public string? Description { get; set; }
         public bool IsActive { get; set; } = true;
+        public float Price { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     }
 
@@ -30,6 +32,7 @@
         public string? Mechanism { get; set; }
         public string? Description { get; set; }
         public bool IsActive { get; set; } = true;
+        public float Price { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     }
 }

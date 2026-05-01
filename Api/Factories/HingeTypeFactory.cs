@@ -25,6 +25,7 @@ namespace BusinessApi.Factories
                 SizeMm = "100mm",
                 Description = "Standard butt hinge for timber doors.",
                 IsActive = true,
+                Price = 56.23f,
                 CreatedAt = new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc),
             },
             new HingeType
@@ -35,6 +36,7 @@ namespace BusinessApi.Factories
                 SizeMm = "Full Length",
                 Description = "Piano hinge for heavy-duty commercial doors.",
                 IsActive = true,
+                Price = 56.23f,
                 CreatedAt = new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc),
             },
             new HingeType
@@ -45,6 +47,7 @@ namespace BusinessApi.Factories
                 SizeMm = "75mm",
                 Description = "Self-closing spring hinge for fire doors.",
                 IsActive = true,
+                Price = 56.23f,
                 CreatedAt = new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc),
             },
         ];

@@ -25,6 +25,7 @@ namespace BusinessApi.Factories
                 Mechanism = "Latch",
                 Description = "Standard lever handle with latch mechanism.",
                 IsActive = true,
+                Price = 56.23f,
                 CreatedAt = new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc),
             },
             new HandleType
@@ -35,6 +36,7 @@ namespace BusinessApi.Factories
                 Mechanism = "Pull",
                 Description = "Straight pull handle for commercial doors.",
                 IsActive = true,
+                Price = 56.23f,
                 CreatedAt = new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc),
             },
             new HandleType
@@ -45,6 +47,7 @@ namespace BusinessApi.Factories
                 Mechanism = "Knob",
                 Description = "Classic round door knob with privacy lock.",
                 IsActive = true,
+                Price = 56.23f,
                 CreatedAt = new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc),
             },
         ];

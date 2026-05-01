@@ -25,6 +25,7 @@ namespace BusinessApi.Factories
                 Material = "Timber",
                 Description = "Standard solid core timber door, suitable for interior and exterior use.",
                 IsActive = true,
+                Price = 500.00f,
                 CreatedAt = new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc),
             },
             new DoorType
@@ -35,6 +36,7 @@ namespace BusinessApi.Factories
                 Material = "Composite",
                 Description = "Lightweight hollow core door for interior use.",
                 IsActive = true,
+                Price = 69.00f,
                 CreatedAt = new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc),
             },
             new DoorType
@@ -45,6 +47,7 @@ namespace BusinessApi.Factories
                 Material = "Steel",
                 Description = "FRR 60/60/60 rated fire door for commercial buildings.",
                 IsActive = true,
+                Price = 56.23f,
                 CreatedAt = new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc),
             },
         ];
