@@ -19,8 +19,7 @@ public class QuoteController : ControllerBase
     [ProducesResponseType(typeof(IEnumerable<Quote>), StatusCodes.Status200OK)]
     public IActionResult GetAll()
     {
-        var quotes = _quoteFactory.GetAll();
-        return Ok(quotes);
+        return Ok(_quoteFactory.GetAll());
     }
 
     [HttpGet("{id:int}")]
@@ -30,5 +29,30 @@ public class QuoteController : ControllerBase
     {
         var quote = _quoteFactory.GetById(id);
         return quote is null ? NotFound($"Quote {id} not found.") : Ok(quote);
+    }
+
+    [HttpPost]
+    [ProducesResponseType(typeof(Quote), StatusCodes.Status201Created)]
+    public IActionResult Create([FromBody] Quote quote)
+    {
+        var created = _quoteFactory.Create(quote);
+        return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
+    }
+
+    [HttpPut("{id:int}")]
+    [ProducesResponseType(typeof(Quote), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public IActionResult Update(int id, [FromBody] Quote quote)
+    {
+        var updated = _quoteFactory.Update(id, quote);
+        return updated is null ? NotFound($"Quote {id} not found.") : Ok(updated);
+    }
+
+    [HttpDelete("{id:int}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public IActionResult Delete(int id)
+    {
+        return _quoteFactory.Delete(id) ? NoContent() : NotFound($"Quote {id} not found.");
     }
 }

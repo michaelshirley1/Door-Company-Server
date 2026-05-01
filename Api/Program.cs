@@ -1,8 +1,22 @@
+using System.Text.Json.Serialization;
 using BusinessApi.Factories;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+        policy.WithOrigins("http://localhost:5173", "https://localhost:5173")
+              .AllowAnyMethod()
+              .AllowAnyHeader());
+});
+
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+        options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+    });
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
@@ -11,14 +25,18 @@ builder.Services.AddSwaggerGen(options =>
     {
         Title   = "Door API",
         Version = "v1",
-        Description = "REST API exposing Job, Invoice, Order and Quote resources."
+        Description = "REST API exposing Job, Invoice, Order, Quote, Customer and hardware type resources."
     });
 });
 
-builder.Services.AddScoped<IJobFactory,     JobFactory>();
-builder.Services.AddScoped<IInvoiceFactory, InvoiceFactory>();
-builder.Services.AddScoped<IOrderFactory,   OrderFactory>();
-builder.Services.AddScoped<IQuoteFactory,   QuoteFactory>();
+builder.Services.AddScoped<ICustomerFactory,    CustomerFactory>();
+builder.Services.AddScoped<IJobFactory,         JobFactory>();
+builder.Services.AddScoped<IInvoiceFactory,     InvoiceFactory>();
+builder.Services.AddScoped<IOrderFactory,       OrderFactory>();
+builder.Services.AddScoped<IQuoteFactory,       QuoteFactory>();
+builder.Services.AddScoped<IDoorTypeFactory,    DoorTypeFactory>();
+builder.Services.AddScoped<IHandleTypeFactory,  HandleTypeFactory>();
+builder.Services.AddScoped<IHingeTypeFactory,   HingeTypeFactory>();
 
 var app = builder.Build();
 
@@ -29,6 +47,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors();
 app.UseAuthorization();
 app.MapControllers();
 

@@ -4,6 +4,7 @@
     {
         public int Id { get; set; }
         public int JobId { get; set; }
+        public string JobNumber { get; set; } = string.Empty;
         public string InvoiceNumber { get; set; } = string.Empty;
         public string Status { get; set; } = "Draft";
         // Draft | Sent | Paid | Overdue | Void
