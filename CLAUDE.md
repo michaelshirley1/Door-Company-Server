@@ -1,8 +1,6 @@
-# Door Company Server — Claude Code Guide
+# CLAUDE.md
 
-## Project Overview
-
-ASP.NET Core 8 Web API for managing a door company's business operations (jobs, invoices, orders, quotes). Uses the **Controller → Factory** pattern with in-memory data storage.
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## Build & Run
 
@@ -14,57 +12,63 @@ dotnet run
 
 - HTTPS: https://localhost:64868
 - HTTP: http://localhost:64869
-- Swagger UI: https://localhost:64868/swagger (Development mode only)
+- Swagger UI: https://localhost:64868/swagger (Development only)
 
-## Project Structure
-
-```
-Api/
-├── Controllers/      # HTTP endpoint handlers (JobController, InvoiceController, OrderController, QuoteController)
-├── Factories/        # Data access layer implementing interfaces with in-memory Lists
-├── Models/           # Domain entities (Models.cs)
-├── Properties/       # launchSettings.json
-├── Program.cs        # App startup, DI registration, Swagger config
-└── BusinessApi.csproj
-```
+CORS is allowed from `http://localhost:5173` and `https://localhost:5173` (frontend dev server).
 
 ## Architecture
 
 Each resource follows: **Model → Interface → Factory → Controller**
 
-- **Factories** are scoped DI services registered in `Program.cs`
-- **Controllers** inject factory interfaces via constructor DI
-- To swap in a real database: replace in-memory lists in factories only — controllers and interfaces stay untouched
+- **Factories** hold the interface and implementation in the same file (`IXxxFactory` + `XxxFactory`)
+- **In-memory state** uses `static readonly List<T>` + `static int _nextId` — data resets on restart
+- **Factories** are registered as `Scoped` in `Program.cs`; controllers inject via interface
+- To add a new resource: create Model → create Factory file (interface + implementation) → create Controller → register in `Program.cs`
 
-## Domain Model
+## Domain Models
 
-Key entities in `Api/Models/Models.cs`:
-- `Customer` — with relationships to quotes, orders, jobs
-- `Quote` — status: Draft | Sent | Accepted | Declined | Expired
-- `PurchaseOrder` — status: Received | Confirmed | InProduction | Ready | Delivered | Cancelled
-- `Job` — status: Scheduled | InProgress | OnHold | Completed | Cancelled
-- `Invoice` — billing with 15% GST default
-- `DoorType`, `HingeType`, `HandleType`, `OrderItem` — product specification models
+Models are split across individual files in `Api/Models/`:
+
+| File | Types |
+|------|-------|
+| `Customer.cs` | `Customer` |
+| `Job.cs` | `Job` — status: Scheduled \| InProgress \| OnHold \| Completed \| Cancelled |
+| `Invoice.cs` | `Invoice` — 15% GST default |
+| `Quote.cs` | `Quote`, references `PurchaseOrder`, `OrderItem` — status: Draft \| Sent \| Accepted \| Order \| Declined \| Expired \| Dispatched \| Delivered \| Invoice \| Paid |
+| `Order.cs` | `PurchaseOrder`, `OrderItem` — PO status: Received \| Confirmed \| InProduction \| Ready \| Delivered \| Cancelled |
+| `Hardware.cs` | `DoorType`, `HingeType`, `HandleType`, `CavitySliderType` |
 
 ## API Endpoints
 
-| Method | Route          | Description       |
-|--------|----------------|-------------------|
-| GET    | /job           | Get all jobs      |
-| GET    | /job/{id}      | Get job by ID     |
-| GET    | /invoice       | Get all invoices  |
-| GET    | /invoice/{id}  | Get invoice by ID |
-| GET    | /order         | Get all orders    |
-| GET    | /order/{id}    | Get order by ID   |
-| GET    | /quote         | Get all quotes    |
-| GET    | /quote/{id}    | Get quote by ID   |
+All resources support full CRUD. Routes follow the controller name (lowercase), **except** `CavitySliderTypeController` which uses `[Route("cavity-slider")]`.
 
-## Testing
+| Resource | Base Route | Notes |
+|----------|------------|-------|
+| Customer | `/customer` | |
+| Job | `/job` | |
+| Invoice | `/invoice` | |
+| Order | `/order` | |
+| Quote | `/quote` | |
+| DoorType | `/doortype` | |
+| HandleType | `/handletype` | |
+| HingeType | `/hingetype` | |
+| CavitySliderType | `/cavity-slider` | `GET /cavity-slider` accepts `?supplier=`, `?heightMm=`, `?category=`, `?isPOA=` query filters |
 
-No test projects currently exist.
+Standard CRUD pattern per resource:
+- `GET /resource` — get all
+- `GET /resource/{id}` — get by ID (404 if missing)
+- `POST /resource` — create (returns 201 with `Location` header)
+- `PUT /resource/{id}` — full update (404 if missing)
+- `DELETE /resource/{id}` — delete (204 on success, 404 if missing)
+
+## JSON Serialization
+
+Global options in `Program.cs`:
+- `ReferenceHandler.IgnoreCycles` — prevents infinite loops on circular nav properties
+- `DefaultIgnoreCondition.WhenWritingNull` — null fields are omitted from responses
 
 ## Notes
 
-- No database configured yet — all data is in-memory
-- No CI/CD workflows configured yet
+- No database — all data is in-memory and lost on restart
+- No tests exist yet
 - Solution file: `Door-Company-Server.sln`

@@ -17,9 +17,11 @@ public class HandleTypeController : ControllerBase
 
     [HttpGet]
     [ProducesResponseType(typeof(IEnumerable<HandleType>), StatusCodes.Status200OK)]
-    public IActionResult GetAll()
+    public IActionResult GetAll(
+        [FromQuery] string? finish = null,
+        [FromQuery] string? mechanism = null)
     {
-        return Ok(_handleTypeFactory.GetAll());
+        return Ok(_handleTypeFactory.GetAll(finish, mechanism));
     }
 
     [HttpGet("{id:int}")]

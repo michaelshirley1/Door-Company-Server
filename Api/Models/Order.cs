@@ -7,7 +7,7 @@
         public int? QuoteId { get; set; }
 
         public string ItemType { get; set; } = "Door";
-        // Door | Handle | Hinge | Hardware | Freight
+        // Door | Handle | Hinge | Hardware
 
         public int? DoorTypeId { get; set; }
         public int? HingeTypeId { get; set; }

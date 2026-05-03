@@ -34,9 +34,10 @@ builder.Services.AddScoped<IJobFactory,         JobFactory>();
 builder.Services.AddScoped<IInvoiceFactory,     InvoiceFactory>();
 builder.Services.AddScoped<IOrderFactory,       OrderFactory>();
 builder.Services.AddScoped<IQuoteFactory,       QuoteFactory>();
-builder.Services.AddScoped<IDoorTypeFactory,    DoorTypeFactory>();
-builder.Services.AddScoped<IHandleTypeFactory,  HandleTypeFactory>();
-builder.Services.AddScoped<IHingeTypeFactory,   HingeTypeFactory>();
+builder.Services.AddScoped<IDoorTypeFactory,         DoorTypeFactory>();
+builder.Services.AddScoped<IHandleTypeFactory,       HandleTypeFactory>();
+builder.Services.AddScoped<IHingeTypeFactory,        HingeTypeFactory>();
+builder.Services.AddScoped<ICavitySliderTypeFactory, CavitySliderTypeFactory>();
 
 var app = builder.Build();
 

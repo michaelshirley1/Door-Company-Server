@@ -4,7 +4,7 @@ namespace BusinessApi.Factories
 {
     public interface IDoorTypeFactory
     {
-        IEnumerable<DoorType> GetAll();
+        IEnumerable<DoorType> GetAll(string? leafType = null, string? material = null, int? heightMm = null, bool? isPOA = null);
         DoorType? GetById(int id);
         DoorType Create(DoorType doorType);
         DoorType? Update(int id, DoorType doorType);
@@ -47,12 +47,24 @@ namespace BusinessApi.Factories
                 Material = "Steel",
                 Description = "FRR 60/60/60 rated fire door for commercial buildings.",
                 IsActive = true,
-                Price = 56.23f,
+                IsPOA = true,
                 CreatedAt = new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc),
             },
         ];
 
-        public IEnumerable<DoorType> GetAll() => _doorTypes;
+        public IEnumerable<DoorType> GetAll(string? leafType = null, string? material = null, int? heightMm = null, bool? isPOA = null)
+        {
+            var query = _doorTypes.AsEnumerable();
+            if (leafType is not null)
+                query = query.Where(d => d.LeafType != null && d.LeafType.Equals(leafType, StringComparison.OrdinalIgnoreCase));
+            if (material is not null)
+                query = query.Where(d => d.Material != null && d.Material.Equals(material, StringComparison.OrdinalIgnoreCase));
+            if (heightMm is not null)
+                query = query.Where(d => d.HeightMm == heightMm);
+            if (isPOA is not null)
+                query = query.Where(d => d.IsPOA == isPOA);
+            return query;
+        }
 
         public DoorType? GetById(int id) =>
             _doorTypes.FirstOrDefault(d => d.Id == id);
@@ -73,8 +85,15 @@ namespace BusinessApi.Factories
             existing.Name = doorType.Name;
             existing.LeafType = doorType.LeafType;
             existing.Material = doorType.Material;
+            existing.ProductRange = doorType.ProductRange;
+            existing.HeightMm = doorType.HeightMm;
+            existing.WidthSize = doorType.WidthSize;
+            existing.SkinThickness = doorType.SkinThickness;
             existing.Description = doorType.Description;
+            existing.IsPOA = doorType.IsPOA;
+            existing.Notes = doorType.Notes;
             existing.IsActive = doorType.IsActive;
+            existing.Price = doorType.IsPOA ? null : doorType.Price;
             return existing;
         }
 

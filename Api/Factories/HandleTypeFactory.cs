@@ -4,7 +4,7 @@ namespace BusinessApi.Factories
 {
     public interface IHandleTypeFactory
     {
-        IEnumerable<HandleType> GetAll();
+        IEnumerable<HandleType> GetAll(string? finish = null, string? mechanism = null);
         HandleType? GetById(int id);
         HandleType Create(HandleType handleType);
         HandleType? Update(int id, HandleType handleType);
@@ -52,7 +52,15 @@ namespace BusinessApi.Factories
             },
         ];
 
-        public IEnumerable<HandleType> GetAll() => _handleTypes;
+        public IEnumerable<HandleType> GetAll(string? finish = null, string? mechanism = null)
+        {
+            var query = _handleTypes.AsEnumerable();
+            if (finish is not null)
+                query = query.Where(h => h.Finish != null && h.Finish.Equals(finish, StringComparison.OrdinalIgnoreCase));
+            if (mechanism is not null)
+                query = query.Where(h => h.Mechanism != null && h.Mechanism.Equals(mechanism, StringComparison.OrdinalIgnoreCase));
+            return query;
+        }
 
         public HandleType? GetById(int id) =>
             _handleTypes.FirstOrDefault(h => h.Id == id);
@@ -75,6 +83,7 @@ namespace BusinessApi.Factories
             existing.Mechanism = handleType.Mechanism;
             existing.Description = handleType.Description;
             existing.IsActive = handleType.IsActive;
+            existing.Price = handleType.Price;
             return existing;
         }
 

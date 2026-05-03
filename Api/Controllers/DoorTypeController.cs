@@ -17,9 +17,13 @@ public class DoorTypeController : ControllerBase
 
     [HttpGet]
     [ProducesResponseType(typeof(IEnumerable<DoorType>), StatusCodes.Status200OK)]
-    public IActionResult GetAll()
+    public IActionResult GetAll(
+        [FromQuery] string? leafType = null,
+        [FromQuery] string? material = null,
+        [FromQuery] int? heightMm = null,
+        [FromQuery] bool? isPOA = null)
     {
-        return Ok(_doorTypeFactory.GetAll());
+        return Ok(_doorTypeFactory.GetAll(leafType, material, heightMm, isPOA));
     }
 
     [HttpGet("{id:int}")]
